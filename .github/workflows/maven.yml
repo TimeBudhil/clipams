@@ -11,12 +11,19 @@ name: Java CI/CD Pipeline
 on:
   push:
     branches: [main]
+    tags:
+      - 'v*'
   pull_request:
     branches: [main]
 
 jobs:
-  build:
+  build-and-release:
+  
     runs-on: ubuntu-latest
+
+    permissions: 
+      contents: write
+    
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 26
@@ -27,3 +34,8 @@ jobs:
           cache: maven
       - name: Build application
         run: mvn -B package --file pom.xml
+        
+      - uses: softprops/action-gh-release@v3.0.0
+        with:
+          files: target/*.jar
+          generate_release_notes: true
