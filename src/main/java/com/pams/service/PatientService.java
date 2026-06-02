@@ -1,6 +1,7 @@
 package com.pams.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.pams.model.Patient;
 import com.pams.repository.PatientRepo;
@@ -28,12 +29,19 @@ public class PatientService {
                 .orElse("Patient not found");
     }
 
-    public String getPatientByName(String name) {
+    public String getFirstPatientByName(String name) {
         return repo.findAll().stream()
                 .filter(p -> p.getFirstName().equalsIgnoreCase(name))
                 .findFirst()
                 .map(Patient::toJsonLong)
                 .orElse("Patient not found");
+    }
+
+    public String getPatientByName(String name) {
+        return repo.findAll().stream()
+                .filter(p -> p.getFirstName().equalsIgnoreCase(name) || p.getLastName().equalsIgnoreCase(name))
+                .map(Patient::toJsonLong)
+                .collect(Collectors.joining("\n"));
     }
 
     public String PatientsToJSON(){
