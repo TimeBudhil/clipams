@@ -1,0 +1,22 @@
+# Target build directory
+target/
+*.jar
+*.war
+*.ear
+
+# VS Code settings and workspace files
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+*.code-workspace
+.history/
+
+# Java language server & compiler outputs
+.project
+.classpath
+.factorypath
+.settings/
+bin/
+
+# Crash logs
+*.log
