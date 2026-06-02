@@ -1,6 +1,5 @@
 package com.pams.service;
 
-import java.util.Comparator;
 import java.util.List;
 
 import com.pams.model.Patient;
@@ -19,6 +18,22 @@ public class PatientService {
             instance = new PatientService();
         }
         return instance;
+    }
+
+    public String getPatientById(int id) {
+        return repo.findAll().stream()
+                .filter(p -> p.getPatientID() == id)
+                .findFirst()
+                .map(Patient::toJsonLong)
+                .orElse("Patient not found");
+    }
+
+    public String getPatientByName(String name) {
+        return repo.findAll().stream()
+                .filter(p -> p.getFirstName().equalsIgnoreCase(name))
+                .findFirst()
+                .map(Patient::toJsonLong)
+                .orElse("Patient not found");
     }
 
     public String PatientsToJSON(){
